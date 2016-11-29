@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.NouvellePartieController">
+   <children>
+      <AnchorPane prefHeight="650.0" prefWidth="700.0">
+         <children>
+            <Label layoutX="105.0" layoutY="199.0" text="Nom:">
+               <font>
+                  <Font name="Early GameBoy Regular" size="15.0" />
+               </font>
+            </Label>
+            <TextField fx:id="nnom" layoutX="192.0" layoutY="190.0" />
+            <Button fx:id="btnchien" layoutX="128.0" layoutY="298.0" mnemonicParsing="false" text="CHIEN" />
+            <Button fx:id="btnchat" layoutX="310.0" layoutY="298.0" mnemonicParsing="false" text="CHAT" />
+            <Button fx:id="btnoiseau" layoutX="456.0" layoutY="298.0" mnemonicParsing="false" text="OISEAU" />
+            <ImageView fx:id="apercu" fitHeight="150.0" fitWidth="200.0" layoutX="250.0" layoutY="385.0" pickOnBounds="true" preserveRatio="true" />
+         </children></AnchorPane>
+      <Label fx:id="ntitre" layoutX="64.0" layoutY="96.0" text="CREEZ VOTRE TAMAGOTCHI">
+         <font>
+            <Font name="Early GameBoy Regular" size="28.0" />
+         </font>
+      </Label>
+      <Button fx:id="nclose" layoutX="26.0" layoutY="25.0" mnemonicParsing="false" text="*" />
+   </children>
+</AnchorPane>
