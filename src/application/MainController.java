@@ -14,7 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-public class JeuController {
+public class MainController {
 	@FXML private Button npartie, cpartie;
 	private Scene scene;
 	private Stage primaryStage;
@@ -26,7 +26,7 @@ public class JeuController {
 			try {
 				root = FXMLLoader.load(getClass().getResource("NouvellePartie.fxml"));
 				scene = new Scene(root);
-				primaryStage = Jeu.window;
+				primaryStage = Main.window;
 				scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 				primaryStage.setScene(scene);
 				primaryStage.show();

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.JeuController">
+   <children>
+      <AnchorPane prefHeight="700.0" prefWidth="700.0" />
+      <ImageView fitHeight="700.0" fitWidth="700.0" pickOnBounds="true">
+         <image>
+            <Image url="@../images/tama.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="affichage" fitHeight="253.0" fitWidth="193.0" layoutX="274.0" layoutY="246.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="life" layoutX="316.0" layoutY="219.0" text="&lt;&lt;&lt;&lt;&lt;" />
+      <Label fx:id="sante" layoutX="274.0" layoutY="219.0" />
+      <Label fx:id="jnom" layoutX="439.0" layoutY="218.0" />
+   </children>
+</AnchorPane>

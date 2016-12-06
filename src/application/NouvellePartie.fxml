@@ -20,7 +20,8 @@
             <Button fx:id="btnchien" layoutX="128.0" layoutY="298.0" mnemonicParsing="false" text="CHIEN" />
             <Button fx:id="btnchat" layoutX="310.0" layoutY="298.0" mnemonicParsing="false" text="CHAT" />
             <Button fx:id="btnoiseau" layoutX="456.0" layoutY="298.0" mnemonicParsing="false" text="OISEAU" />
-            <ImageView fx:id="apercu" fitHeight="150.0" fitWidth="200.0" layoutX="250.0" layoutY="385.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="apercu" fitHeight="71.0" fitWidth="84.0" layoutX="324.0" layoutY="385.0" pickOnBounds="true" preserveRatio="true" smooth="false" />
+            <Button fx:id="create" layoutX="270.0" layoutY="585.0" mnemonicParsing="false" text="CREER" />
          </children></AnchorPane>
       <Label fx:id="ntitre" layoutX="64.0" layoutY="96.0" text="CREEZ VOTRE TAMAGOTCHI">
          <font>

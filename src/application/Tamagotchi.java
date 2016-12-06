@@ -18,6 +18,7 @@ public class Tamagotchi {
 		this.nom = caracteristique.getNom();
 		this.race = caracteristique.getRace();
 		this.age = caracteristique.getAge();
+		this.proprete = this.bonheur = this.sommeil = this.appetit = this.sante = 100;
 	}
 
 	public int getProprete() {
@@ -40,6 +41,30 @@ public class Tamagotchi {
 		return sante;
 	}
 	
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public String getRace() {
+		return race;
+	}
+
+	public void setRace(String race) {
+		this.race = race;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
 	public void nourir(){
 		this.appetit = this.getAppetit() + 20;
 	}

@@ -15,13 +15,13 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
-public class Jeu extends Application {
+public class Main extends Application {
 	public static Stage window;
-	
+	public static Tamagotchi tama;
 	@Override
 	public void start(Stage primaryStage) throws IOException {
 		window = primaryStage;
-		Parent root = FXMLLoader.load(getClass().getResource("jeu.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("main.fxml"));
 		Scene scene = new Scene(root);
 		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		window.setScene(scene);
@@ -29,7 +29,7 @@ public class Jeu extends Application {
 		final URL resource = getClass().getResource("/images/theme_sound.mp3");
 	    final Media media = new Media(resource.toString());
 		MediaPlayer mediaPlayer = new MediaPlayer(media);
-	    mediaPlayer.play();
+	    //mediaPlayer.play();
 		window.setResizable(false);
 		window.show();
 	}

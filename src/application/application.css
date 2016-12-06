@@ -1,9 +1,9 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
-#npartie, #cpartie, #nclose, #nnom, #btnchien, #btnchat, #btnoiseau{
+#npartie, #cpartie, #nclose, #nnom, #btnchien, #btnchat, #btnoiseau, #create, #life, #sante, #jnom{
 	-fx-font-size: 12px;
 	-fx-font-family: "Early Gameboy";
 	-fx-background-color: transparent ;
 }
-#nclose, #nnom, #btnchien, #btnchat, #btnoiseau{
+#nclose, #nnom, #btnchien, #btnchat, #btnoiseau, #create{
 	-fx-font-size: 20px;
 }

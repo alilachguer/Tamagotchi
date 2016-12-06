@@ -2,7 +2,7 @@ package application;
 
 public class Caracteristique {
 	private String nom;
-	private static final String CHIEN = "chien", CHAT = "chat", OISEAU = "oiseau";
+	public static final String CHIEN = "chien", CHAT = "chat", OISEAU = "oiseau";
 	private String race;
 	private int age;
 	
