@@ -1,6 +1,8 @@
 package application;
 
-public class Tamagotchi {
+import java.util.TimerTask;
+
+public class Tamagotchi extends TimerTask{
 	private int proprete;
 	private int bonheur;
 	private int sommeil;
@@ -13,7 +15,16 @@ public class Tamagotchi {
 	public Tamagotchi(){
 		this.proprete = this.bonheur = this.sommeil = this.appetit = this.sante = 100;
 	}
-	
+
+	@Override
+	public void run() {
+		this.proprete -= 5;
+		this.bonheur -= 5;
+		this.sommeil -= 5;
+		this.appetit -= 5;
+		diminuerSante();
+	}
+
 	public Tamagotchi(Caracteristique caracteristique){
 		this.nom = caracteristique.getNom();
 		this.race = caracteristique.getRace();
@@ -83,6 +94,19 @@ public class Tamagotchi {
 	
 	public void laver(){
 		this.proprete = this.getProprete() + 20;
+	}
+	
+	public void diminuerSante(){
+		if (this.appetit <= 20 )
+			this.sante = this.getSante() - 5;
+		if(this.proprete <= 20)
+			this.sante = this.getSante() -5;
+		if(this.bonheur <= 20)
+			this.sante = this.getSante() -5;
+		if(this.sommeil <= 20)
+			this.sante = this.getSante() -5;
+		
+		
 	}
 	
 }

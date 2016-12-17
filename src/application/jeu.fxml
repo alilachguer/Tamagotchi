@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -17,5 +18,10 @@
       <Label fx:id="life" layoutX="316.0" layoutY="220.0" text="&lt;&lt;&lt;&lt;&lt;" />
       <Label fx:id="sante" layoutX="274.0" layoutY="220.0" />
       <Label fx:id="jnom" layoutX="439.0" layoutY="220.0" />
+      <Button fx:id="nourir" layoutX="256.0" layoutY="468.0" mnemonicParsing="false" text="nourir" />
+      <Button fx:id="divertir" layoutX="256.0" layoutY="507.0" mnemonicParsing="false" text="divertir" />
+      <Button fx:id="dormir" layoutX="424.0" layoutY="468.0" mnemonicParsing="false" text="dormir" />
+      <Button fx:id="laver" layoutX="428.0" layoutY="507.0" mnemonicParsing="false" text="laver" />
+      <Button fx:id="soigner" layoutX="337.0" layoutY="491.0" mnemonicParsing="false" text="soigner" />
    </children>
 </AnchorPane>
