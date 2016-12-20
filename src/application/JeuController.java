@@ -1,6 +1,9 @@
 package application;
 
 import javafx.animation.Animation;
+import javafx.beans.binding.Binding;
+import javafx.beans.binding.Bindings;
+import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -34,26 +37,25 @@ public class JeuController {
 	private static final Image IMAGE = new Image("/images/sprites/sprite_chien.png");
 	
 	@FXML private void initialize(){
-		sante.setText(String.valueOf(Main.tama.getSante()));
-		jnom.setText(Main.tama.getNom().substring(0, 4));
+		if (Main.tama.getRace() == Caracteristique.CHIEN)
+			sprite = sprite_chien;
+		else if (Main.tama.getRace() == Caracteristique.CHAT)
+			sprite = sprite_chat;
+		else
+			sprite = sprite_oiseau;
+		
 		Timer timer = new Timer();
 		timer.schedule(Main.tama, 0, 1000);
-		if(Main.tama.getAppetit() <= 20 || Main.tama.getBonheur() <= 20){
-			Main.tama.diminuerSante();
-			sante.setText(String.valueOf(Main.tama.getSante()));
-		}
+		
+		jnom.setText(Main.tama.getNom().substring(0, 4));
+		Main.tama.santeProperty().addListener((v, oldValue, newValue) -> {
+			sante.setText(newValue.toString());
+		});
+		//sante.textProperty().bind(Main.tama.santeProperty().asString());
+		System.out.println(Main.tama.getSante());
 		
 		
 		
-		
-		if (Main.tama.getRace() == Caracteristique.CHIEN) {
-			sprite = sprite_chien;
-		}else if (Main.tama.getRace() == Caracteristique.CHAT) {
-			sprite = sprite_chat;
-		}else {
-			sprite = sprite_oiseau;
-		}
-
 		affichage.setImage(sprite_bebe);
 		Animation animation_bebe = new SpriteAnimation(affichage, Duration.millis(1000), 
 				4, 2, 
