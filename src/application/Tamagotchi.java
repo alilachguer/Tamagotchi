@@ -10,45 +10,70 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
 public class Tamagotchi extends TimerTask{
-	private int proprete;
-	private int bonheur;
-	private int sommeil;
-	private int appetit;
+	private IntegerProperty proprete;
+	private IntegerProperty bonheur;
+	private IntegerProperty sommeil;
+	private IntegerProperty appetit;
 	private IntegerProperty sante;
 	private String nom;
 	private String race;
 	private int age;
 
 	public Tamagotchi(){
-		this.proprete = this.bonheur = this.sommeil = this.appetit = 100;
-		sante = new SimpleIntegerProperty(100);
+		this.sante = new SimpleIntegerProperty(100);
+		this.proprete = new SimpleIntegerProperty(100);
+		this.bonheur = new SimpleIntegerProperty(100);
+		this.sommeil = new SimpleIntegerProperty(100);
+		this.appetit = new SimpleIntegerProperty(100);
 	}
 
 	@Override
 	public void run() {
-		this.proprete -= 5;
-		this.bonheur -= 5;
-		this.sommeil -= 5;
-		this.appetit -= 5;
+		
 		Platform.runLater(() -> {
+			this.setProprete(this.getProprete() - 2);
+			this.setBonheur(this.getBonheur() - 2);
+			this.setSommeil(this.getSommeil() - 2);
+			this.setAppetit(this.getAppetit() - 2);
 			diminuerSante();
         });
+		
+		
+		System.out.println(Main.tama.getSante());
 	}
 
 	public Tamagotchi(Caracteristique caracteristique){
 		this.nom = caracteristique.getNom();
 		this.race = caracteristique.getRace();
 		this.age = caracteristique.getAge();
-		this.proprete = this.bonheur = this.sommeil = this.appetit = 100;
-		sante = new SimpleIntegerProperty(100);
-	}
-	
-	public int getSante() {
-		return sante.get();
+		this.sante = new SimpleIntegerProperty(100);
+		this.proprete = new SimpleIntegerProperty(100);
+		this.bonheur = new SimpleIntegerProperty(100);
+		this.sommeil = new SimpleIntegerProperty(100);
+		this.appetit = new SimpleIntegerProperty(100);
 	}
 	
 	public IntegerProperty santeProperty(){
 		return sante;
+	}
+	public IntegerProperty propreteProperty(){
+		return proprete;
+	}
+	
+	public IntegerProperty bonheurProperty(){
+		return bonheur;
+	}
+	
+	public IntegerProperty sommeilProperty(){
+		return sommeil;
+	}
+	
+	public IntegerProperty appetitProperty(){
+		return appetit;
+	}
+	
+	public int getSante() {
+		return sante.get();
 	}
 	
 	public void setSante(int sante) {
@@ -56,35 +81,35 @@ public class Tamagotchi extends TimerTask{
 	}
 
 	public int getProprete() {
-		return proprete;
+		return proprete.get();
 	}
 
 	public int getBonheur() {
-		return bonheur;
+		return bonheur.get();
 	}
 
 	public int getSommeil() {
-		return sommeil;
+		return sommeil.get();
 	}
 
 	public int getAppetit() {
-		return appetit;
+		return appetit.get();
 	}
 	
 	public void setProprete(int proprete) {
-		this.proprete = proprete;
+		this.proprete.set(proprete);
 	}
 
 	public void setBonheur(int bonheur) {
-		this.bonheur = bonheur;
+		this.bonheur.set(bonheur);
 	}
 
 	public void setSommeil(int sommeil) {
-		this.sommeil = sommeil;
+		this.sommeil.set(sommeil);
 	}
 
 	public void setAppetit(int appetit) {
-		this.appetit = appetit;
+		this.appetit.set(appetit);
 	}
 
 	public String getNom() {
@@ -112,33 +137,53 @@ public class Tamagotchi extends TimerTask{
 	}
 
 	public void nourir(){
-		this.appetit = this.getAppetit() + 10;
+		if (this.getAppetit() < 100) {
+			this.setAppetit(this.getAppetit() + 10); 
+		}
+		if (this.getAppetit() >= 130) {
+			this.setSante(this.getSante() - 1);
+		}
 	}
 	
 	public void soigner(){
-		this.setSante(this.getSante() + 10);
+		if (this.getSante() < 100) {
+			this.setSante(this.getSante() + 10);
+		}
+		if (this.getSante() >= 100) {
+			this.setSante(100);
+		}
 	}
 	
 	public void divertir(){
-		this.bonheur = this.getBonheur() + 10;
+		this.setBonheur(this.getBonheur() + 10);
 	}
 	
 	public void dormir(){
-		this.sommeil = this.getSommeil() + 10;
+		if (this.getSommeil() < 100) {
+			this.setSommeil(this.getSommeil() + 10);
+		}
+		if (this.getSommeil() >= 150) {
+			this.setSante(this.getSante() - 2);
+		}
 	}
 	
 	public void laver(){
-		this.proprete = this.getProprete() + 10;
+		if (this.getProprete() < 100) {
+			this.setProprete(this.getProprete() + 10);
+		}
+		if (this.getProprete() > 100) {
+			this.setSante(this.getSante() - 1);
+		}
 	}
 	
 	public void diminuerSante(){
-		if (this.appetit <= 20 )
+		if (this.getAppetit() <= 20 )
 			this.setSante(this.getSante() - 3);
-		if(this.proprete <= 20)
+		if(this.getProprete() <= 20)
 			this.setSante(this.getSante() - 1);
-		if(this.bonheur <= 20)
+		if(this.getBonheur() <= 20)
 			this.setSante(this.getSante() - 1);
-		if(this.sommeil <= 20)
+		if(this.getSommeil() <= 20)
 			this.setSante(this.getSante() - 2);
 	}
 	

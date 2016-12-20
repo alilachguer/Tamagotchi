@@ -37,7 +37,7 @@ public class JeuController {
 	private Image sprite;
 	
 	
-	private static final Image IMAGE = new Image("/images/sprites/sprite_chien.png");
+	private static final Image IMAGE = sprite_chat;
 	
 	@FXML private void initialize(){
 		if (Main.tama.getRace() == Caracteristique.CHIEN)
@@ -48,7 +48,7 @@ public class JeuController {
 			sprite = sprite_oiseau;
 		
 		Timer timer = new Timer();
-		timer.schedule(Main.tama, 0, 1000);
+		timer.schedule(Main.tama, 0, 5*1000);
 		
 		jnom.setText(Main.tama.getNom().substring(0, 4));
 		
@@ -56,41 +56,35 @@ public class JeuController {
 			@Override
 			public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
 				sante.setText(new Integer(Main.tama.getSante()).toString());
-				
 			}
 		});
 		
-		affichage.setImage(sprite_bebe);
-		Animation animation_bebe = new SpriteAnimation(affichage, Duration.millis(1000), 
-				4, 2, 
-				150, 50,
-                WIDTH, HEIGHT
-        );
-		animation_bebe.setCycleCount(Animation.INDEFINITE);
+		affichage.setImage(sprite_oeuf);
+		Animation animation_bebe = new SpriteAnimation(affichage, Duration.millis(2000), 4, 4, 15, 40, WIDTH, HEIGHT);
+		animation_bebe.setCycleCount(4);
 		animation_bebe.play();
 		
+		
+		
 		laver.setOnAction(e->{
+			Main.tama.laver();
 			System.out.println(Main.tama.getAppetit());
+			System.out.println(Main.tama.getSommeil());
 			System.out.println(Main.tama.getBonheur());
 			System.out.println(Main.tama.getProprete());
-			System.out.println(Main.tama.getSommeil());
 			System.out.println(Main.tama.getSante());
-			System.out.println(Main.tama.santeProperty());
 		});
 		dormir.setOnAction(e->{
-			System.out.println("laver");
+			Main.tama.dormir();
 		});
 		divertir.setOnAction(e->{
-			System.out.println("laver");
+			Main.tama.divertir();
 		});
 		nourir.setOnAction(e->{
-			System.out.println("laver");
+			Main.tama.nourir();
 		});
 		soigner.setOnAction(e->{
-			System.out.println("laver");
+			Main.tama.soigner();
 		});
-		
-		
-		
 	}
 }
