@@ -2,6 +2,7 @@ package application;
 
 import java.util.TimerTask;
 
+import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -17,10 +18,9 @@ public class Tamagotchi extends TimerTask{
 	private String nom;
 	private String race;
 	private int age;
-	private int s;
-	
+
 	public Tamagotchi(){
-		this.proprete = this.bonheur = this.sommeil = this.appetit = this.s = 100;
+		this.proprete = this.bonheur = this.sommeil = this.appetit = 100;
 		sante = new SimpleIntegerProperty(100);
 	}
 
@@ -30,26 +30,17 @@ public class Tamagotchi extends TimerTask{
 		this.bonheur -= 5;
 		this.sommeil -= 5;
 		this.appetit -= 5;
-		this.sante = new SimpleIntegerProperty(s);
-		this.s += 1;
-		//diminuerSante();
-		//this.sante.bind(this.sante.add(1));
+		Platform.runLater(() -> {
+			diminuerSante();
+        });
 	}
 
 	public Tamagotchi(Caracteristique caracteristique){
 		this.nom = caracteristique.getNom();
 		this.race = caracteristique.getRace();
 		this.age = caracteristique.getAge();
-		this.proprete = this.bonheur = this.sommeil = this.appetit = this.s = 100;
-		sante = new SimpleIntegerProperty(s);
-	}
-
-	public int getS() {
-		return s;
-	}
-
-	public void setS(int s) {
-		this.s = s;
+		this.proprete = this.bonheur = this.sommeil = this.appetit = 100;
+		sante = new SimpleIntegerProperty(100);
 	}
 	
 	public int getSante() {
@@ -125,7 +116,7 @@ public class Tamagotchi extends TimerTask{
 	}
 	
 	public void soigner(){
-		this.s = this.getS() + 10;
+		this.setSante(this.getSante() + 10);
 	}
 	
 	public void divertir(){
@@ -142,13 +133,13 @@ public class Tamagotchi extends TimerTask{
 	
 	public void diminuerSante(){
 		if (this.appetit <= 20 )
-			this.s = this.getS() - 3;
+			this.setSante(this.getSante() - 3);
 		if(this.proprete <= 20)
-			this.s = this.getS() -1;
+			this.setSante(this.getSante() - 1);
 		if(this.bonheur <= 20)
-			this.s = this.getS() -1;
+			this.setSante(this.getSante() - 1);
 		if(this.sommeil <= 20)
-			this.s = this.getS() -2;
+			this.setSante(this.getSante() - 2);
 	}
 	
 }

@@ -3,7 +3,10 @@ package application;
 import javafx.animation.Animation;
 import javafx.beans.binding.Binding;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -48,13 +51,14 @@ public class JeuController {
 		timer.schedule(Main.tama, 0, 1000);
 		
 		jnom.setText(Main.tama.getNom().substring(0, 4));
-		Main.tama.santeProperty().addListener((v, oldValue, newValue) -> {
-			sante.setText(newValue.toString());
+		
+		Main.tama.santeProperty().addListener(new ChangeListener<Object>() {
+			@Override
+			public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
+				sante.setText(new Integer(Main.tama.getSante()).toString());
+				
+			}
 		});
-		//sante.textProperty().bind(Main.tama.santeProperty().asString());
-		System.out.println(Main.tama.getSante());
-		
-		
 		
 		affichage.setImage(sprite_bebe);
 		Animation animation_bebe = new SpriteAnimation(affichage, Duration.millis(1000), 
@@ -71,6 +75,7 @@ public class JeuController {
 			System.out.println(Main.tama.getProprete());
 			System.out.println(Main.tama.getSommeil());
 			System.out.println(Main.tama.getSante());
+			System.out.println(Main.tama.santeProperty());
 		});
 		dormir.setOnAction(e->{
 			System.out.println("laver");

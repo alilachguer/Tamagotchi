@@ -16,7 +16,7 @@
       </ImageView>
       <ImageView fx:id="affichage" fitHeight="253.0" fitWidth="193.0" layoutX="274.0" layoutY="246.0" pickOnBounds="true" preserveRatio="true" />
       <Label fx:id="life" layoutX="316.0" layoutY="220.0" text="&lt;&lt;&lt;&lt;&lt;" />
-      <Label fx:id="sante" layoutX="274.0" layoutY="220.0" />
+      <Label fx:id="sante" layoutX="256.0" layoutY="220.0" text="100" />
       <Label fx:id="jnom" layoutX="439.0" layoutY="220.0" />
       <Button fx:id="nourir" layoutX="256.0" layoutY="468.0" mnemonicParsing="false" text="nourir" />
       <Button fx:id="divertir" layoutX="256.0" layoutY="507.0" mnemonicParsing="false" text="divertir" />
