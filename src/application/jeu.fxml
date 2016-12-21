@@ -13,8 +13,10 @@
             <Image url="@../images/tama.jpg" />
          </image>
       </ImageView>
-      <AnchorPane prefHeight="700.0" prefWidth="700.0" />
-      <ImageView fx:id="affichage" fitHeight="222.0" fitWidth="193.0" layoutX="274.0" layoutY="246.0" pickOnBounds="true" preserveRatio="true" />
+      <AnchorPane prefHeight="700.0" prefWidth="700.0">
+         <children>
+            <ImageView fx:id="affichage" fitHeight="147.0" fitWidth="165.0" layoutX="288.0" layoutY="277.0" pickOnBounds="true" preserveRatio="true" />
+         </children></AnchorPane>
       <Label fx:id="life" layoutX="316.0" layoutY="220.0" text="&lt;&lt;&lt;&lt;&lt;" />
       <Label fx:id="sante" layoutX="256.0" layoutY="220.0" text="100" />
       <Label fx:id="jnom" layoutX="439.0" layoutY="220.0" />

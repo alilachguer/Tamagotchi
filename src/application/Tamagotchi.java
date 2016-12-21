@@ -17,7 +17,7 @@ public class Tamagotchi extends TimerTask{
 	private IntegerProperty sante;
 	private String nom;
 	private String race;
-	private int age;
+	private IntegerProperty age;
 
 	public Tamagotchi(){
 		this.sante = new SimpleIntegerProperty(100);
@@ -29,23 +29,21 @@ public class Tamagotchi extends TimerTask{
 
 	@Override
 	public void run() {
-		
 		Platform.runLater(() -> {
-			this.setProprete(this.getProprete() - 2);
-			this.setBonheur(this.getBonheur() - 2);
+			this.setProprete(this.getProprete() - 1);
+			this.setBonheur(this.getBonheur() - 1);
 			this.setSommeil(this.getSommeil() - 2);
 			this.setAppetit(this.getAppetit() - 2);
-			diminuerSante();
+			changerStatutSante();
         });
 		
-		
-		System.out.println(Main.tama.getSante());
+		this.setAge(this.getAge() + 1);
 	}
 
 	public Tamagotchi(Caracteristique caracteristique){
 		this.nom = caracteristique.getNom();
 		this.race = caracteristique.getRace();
-		this.age = caracteristique.getAge();
+		this.age = new SimpleIntegerProperty(0);
 		this.sante = new SimpleIntegerProperty(100);
 		this.proprete = new SimpleIntegerProperty(100);
 		this.bonheur = new SimpleIntegerProperty(100);
@@ -70,6 +68,10 @@ public class Tamagotchi extends TimerTask{
 	
 	public IntegerProperty appetitProperty(){
 		return appetit;
+	}
+	
+	public IntegerProperty ageProperty(){
+		return age;
 	}
 	
 	public int getSante() {
@@ -129,11 +131,11 @@ public class Tamagotchi extends TimerTask{
 	}
 
 	public int getAge() {
-		return age;
+		return age.get();
 	}
 
 	public void setAge(int age) {
-		this.age = age;
+		this.age.set(age);
 	}
 
 	public void nourir(){
@@ -176,7 +178,7 @@ public class Tamagotchi extends TimerTask{
 		}
 	}
 	
-	public void diminuerSante(){
+	public void changerStatutSante(){
 		if (this.getAppetit() <= 20 )
 			this.setSante(this.getSante() - 3);
 		if(this.getProprete() <= 20)
