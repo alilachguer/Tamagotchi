@@ -22,10 +22,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class JeuController extends TimerTask{
-	private static final int COLUMNS  =   15;
-    private static final int COUNT    =  2;
-    private static final int OFFSET_X =  150;
-    private static final int OFFSET_Y =  50;
     private static final int WIDTH    = 40;
     private static final int HEIGHT   = 40;
 	private static final Image sprite_chien = new Image("/images/sprites/sprite_chien.png");
@@ -52,9 +48,14 @@ public class JeuController extends TimerTask{
 		timer.schedule(Main.tama, 0, 5*1000);
 		Timer default_sprite = new Timer();
 		default_sprite.schedule(this, 0, 5*1000);
-		jnom.setText(Main.tama.getNom().substring(0, 4));
 		
-		animer(sprite, 2, 2, 470, 245, Animation.INDEFINITE);
+		if (Main.tama.getAge() <= 1) {
+			animer(sprite_oeuf, 4, 4, 10, 50, Animation.INDEFINITE);
+		}else{
+			animer(sprite, 2, 2, 200, 300, Animation.INDEFINITE);
+		}
+		
+		jnom.setText(Main.tama.getNom().substring(0, 4));
 		
 		Main.tama.santeProperty().addListener(new ChangeListener<Object>() {
 			@Override
@@ -113,7 +114,7 @@ public class JeuController extends TimerTask{
 				}else if (Main.tama.getAge() < 10) {
 					if (Main.tama.getAppetit() <= 80) {
 						animation.stop();
-						animer(sprite, 2, 2, 280, 90, Animation.INDEFINITE);
+						animer(sprite_bebe, 2, 2, 280, 90, Animation.INDEFINITE);
 					}
 					if (Main.tama.getAppetit() <= 50) {
 						animation.stop();
@@ -131,26 +132,72 @@ public class JeuController extends TimerTask{
 						animation.stop();
 						animer(sprite, 2, 2, 280, 205, Animation.INDEFINITE);
 					}
-					if (Main.tama.getAppetit() <= 50) {
+					if (Main.tama.getBonheur() <= 50) {
 						animation.stop();
 						animer(sprite, 2, 2, 280, 245, Animation.INDEFINITE);
 					}
 				}else if (Main.tama.getAge() < 10) {
-					if (Main.tama.getAppetit() <= 80) {
+					if (Main.tama.getBonheur() <= 80) {
 						animation.stop();
-						animer(sprite, 2, 2, 280, 90, Animation.INDEFINITE);
+						animer(sprite_bebe, 2, 2, 280, 205, Animation.INDEFINITE);
 					}
-					if (Main.tama.getAppetit() <= 50) {
+					if (Main.tama.getBonheur() <= 50) {
 						animation.stop();
-						animer(sprite_bebe, 2, 2, 280, 162, Animation.INDEFINITE);
+						animer(sprite_bebe, 2, 2, 245, 162, Animation.INDEFINITE);
 					}
 				}	
-				
 			}
 		});
 		
+		Main.tama.sommeilProperty().addListener(new ChangeListener<Object>() {
+			@Override
+			public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
+				if (Main.tama.getAge() >= 10) {
+					if (Main.tama.getSommeil() <= 80) {
+						animation.stop();
+						animer(sprite, 3, 3, 470, 85, Animation.INDEFINITE);
+					}
+					if (Main.tama.getSommeil() <= 50) {
+						animation.stop();
+						animer(sprite, 2, 2, 470, 165, Animation.INDEFINITE);
+					}
+				}else if (Main.tama.getAge() < 10) {
+					if (Main.tama.getSommeil() <= 80) {
+						animation.stop();
+						animer(sprite_bebe, 3, 3, 470, 85, Animation.INDEFINITE);
+					}
+					if (Main.tama.getSommeil() <= 50) {
+						animation.stop();
+						animer(sprite_bebe, 2, 2, 470, 165, Animation.INDEFINITE);
+					}
+				}	
+			}
+		});
 		
-		
+		Main.tama.propreteProperty().addListener(new ChangeListener<Object>() {
+			@Override
+			public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
+				if (Main.tama.getAge() >= 10) {
+					if (Main.tama.getProprete() <= 80) {
+						animation.stop();
+						animer(sprite, 2, 2, 470, 42, Animation.INDEFINITE);
+					}
+					if (Main.tama.getProprete() <= 50) {
+						animation.stop();
+						animer(sprite, 2, 2, 470, 0, Animation.INDEFINITE);
+					}
+				}else if (Main.tama.getAge() < 10) {
+					if (Main.tama.getProprete() <= 80) {
+						animation.stop();
+						animer(sprite_bebe, 2, 2, 470, 42, Animation.INDEFINITE);
+					}
+					if (Main.tama.getProprete() <= 50) {
+						animation.stop();
+						animer(sprite_bebe, 2, 2, 470, 0, Animation.INDEFINITE);
+					}
+				}	
+			}
+		});
 		
 		laver.setOnAction(e->{
 			Main.tama.laver();
@@ -219,10 +266,9 @@ public class JeuController extends TimerTask{
 				animer(sprite, 2, 2, 140, 40, Animation.INDEFINITE);
 			}else if (Main.tama.getAge() < 10) {
 				animation.stop();
-				animer(sprite, 2, 2, 280, 245, Animation.INDEFINITE);
+				animer(sprite_bebe, 2, 2, 140, 40, Animation.INDEFINITE);
 			}
         });
-		
 	}
 	
 	public void animer(Image sprite, int cols, int count, int x, int y, int duree){
