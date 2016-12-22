@@ -12,14 +12,30 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
+import java.io.File;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.SerializationConfig;
 
 public class JeuController extends TimerTask{
     private static final int WIDTH    = 40;
@@ -34,20 +50,30 @@ public class JeuController extends TimerTask{
 	@FXML private Button laver, soigner, dormir, divertir, nourir;
 	private Image sprite;
 	private Animation animation;
+	public static List<Tamagotchi> listTama = new ArrayList<Tamagotchi>();
+	Timer timer = new Timer();
+	Timer default_sprite = new Timer();
+	private Connection connection;
 	
 	
 	@FXML private void initialize(){
-		if (Main.tama.getRace() == Caracteristique.CHIEN)
+		connection = database.dbconnect();
+		if (Main.tama.getRace() == Tamagotchi.CHIEN)
 			sprite = sprite_chien;
-		else if (Main.tama.getRace() == Caracteristique.CHAT)
+		else if (Main.tama.getRace() == Tamagotchi.CHAT)
 			sprite = sprite_chat;
 		else
 			sprite = sprite_oiseau;
 		
-		Timer timer = new Timer();
+		
 		timer.schedule(Main.tama, 0, 5*1000);
-		Timer default_sprite = new Timer();
+		
 		default_sprite.schedule(this, 0, 5*1000);
+		
+		Main.window.setOnCloseRequest(e -> {
+			e.consume();
+			fermerFenetre();
+		});
 		
 		if (Main.tama.getAge() <= 1) {
 			animer(sprite_oeuf, 4, 4, 10, 50, Animation.INDEFINITE);
@@ -107,7 +133,7 @@ public class JeuController extends TimerTask{
 						animation.stop();
 						animer(sprite, 2, 2, 280, 90, Animation.INDEFINITE);
 					}
-					if (Main.tama.getAppetit() <= 50) {
+					if (Main.tama.getAppetit() <= 60) {
 						animation.stop();
 						animer(sprite, 2, 2, 280, 162, Animation.INDEFINITE);
 					}
@@ -116,7 +142,7 @@ public class JeuController extends TimerTask{
 						animation.stop();
 						animer(sprite_bebe, 2, 2, 280, 90, Animation.INDEFINITE);
 					}
-					if (Main.tama.getAppetit() <= 50) {
+					if (Main.tama.getAppetit() <= 60) {
 						animation.stop();
 						animer(sprite_bebe, 2, 2, 280, 162, Animation.INDEFINITE);
 					}
@@ -128,20 +154,20 @@ public class JeuController extends TimerTask{
 			@Override
 			public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
 				if (Main.tama.getAge() >= 10) {
-					if (Main.tama.getBonheur() <= 80) {
+					if (Main.tama.getBonheur() <= 60) {
 						animation.stop();
 						animer(sprite, 2, 2, 280, 205, Animation.INDEFINITE);
 					}
-					if (Main.tama.getBonheur() <= 50) {
+					if (Main.tama.getBonheur() <= 35) {
 						animation.stop();
 						animer(sprite, 2, 2, 280, 245, Animation.INDEFINITE);
 					}
 				}else if (Main.tama.getAge() < 10) {
-					if (Main.tama.getBonheur() <= 80) {
+					if (Main.tama.getBonheur() <= 60) {
 						animation.stop();
 						animer(sprite_bebe, 2, 2, 280, 205, Animation.INDEFINITE);
 					}
-					if (Main.tama.getBonheur() <= 50) {
+					if (Main.tama.getBonheur() <= 35) {
 						animation.stop();
 						animer(sprite_bebe, 2, 2, 245, 162, Animation.INDEFINITE);
 					}
@@ -178,20 +204,20 @@ public class JeuController extends TimerTask{
 			@Override
 			public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
 				if (Main.tama.getAge() >= 10) {
-					if (Main.tama.getProprete() <= 80) {
+					if (Main.tama.getProprete() <= 70) {
 						animation.stop();
 						animer(sprite, 2, 2, 470, 42, Animation.INDEFINITE);
 					}
-					if (Main.tama.getProprete() <= 50) {
+					if (Main.tama.getProprete() <= 40) {
 						animation.stop();
 						animer(sprite, 2, 2, 470, 0, Animation.INDEFINITE);
 					}
 				}else if (Main.tama.getAge() < 10) {
-					if (Main.tama.getProprete() <= 80) {
+					if (Main.tama.getProprete() <= 70) {
 						animation.stop();
 						animer(sprite_bebe, 2, 2, 470, 42, Animation.INDEFINITE);
 					}
-					if (Main.tama.getProprete() <= 50) {
+					if (Main.tama.getProprete() <= 40) {
 						animation.stop();
 						animer(sprite_bebe, 2, 2, 470, 0, Animation.INDEFINITE);
 					}
@@ -276,5 +302,56 @@ public class JeuController extends TimerTask{
 		animation = new SpriteAnimation(affichage, Duration.millis(1000), cols, cols, x, y, WIDTH, HEIGHT);
 		animation.setCycleCount(duree);
 		animation.play();
+	}
+	
+	public void fermerFenetre(){
+		
+		Alert fermer = new Alert(AlertType.CONFIRMATION);
+		fermer.setTitle("Confirmer la sauvegarde avant de quitter");
+		fermer.setHeaderText("voulez vous sauvegarder la partie avant de quitter?");
+		ButtonType oui = new ButtonType("Oui");
+		ButtonType non = new ButtonType("Non");
+		ButtonType annuler = new ButtonType("Annuler", ButtonData.CANCEL_CLOSE);
+		fermer.getButtonTypes().setAll(oui, non, annuler);
+		Optional<ButtonType> res = fermer.showAndWait();
+		if (res.get() == oui) {
+			int count = 0;
+			try {
+				final String queryCheck = "SELECT count(*) from tamagotchi WHERE nom = ?";
+				final PreparedStatement ps = connection.prepareStatement(queryCheck);
+				ps.setString(1, Main.tama.getNom());
+				ResultSet resultSet = ps.executeQuery();
+				if(resultSet.next()) {
+					count = resultSet.getInt(1);
+				}
+				if (count > 0) {
+					Statement stmt = connection.createStatement();
+					String sql = "UPDATE tamagotchi set age = "+Main.tama.getAge()+", sante = "+Main.tama.getSante()+
+							", sommeil = "+Main.tama.getSommeil()+", proprete = "+Main.tama.getProprete()+
+							", appetit = "+Main.tama.getAppetit()+", bonheur = "+Main.tama.getBonheur()+
+							" where nom = "+Main.tama.getNom()+" and race = "+Main.tama.getRace()+" ;";
+					stmt.executeUpdate(sql);
+				    connection.commit();
+				}else{
+					Statement stmt = connection.createStatement();
+					String sql = "INSERT INTO tamagotchi(nom,race,age,sante,proprete,sommeil,appetit,bonheur)"
+							+ " VALUES ('"+Main.tama.getNom()+"', '"+Main.tama.getRace()+"' ,"+Main.tama.getAge()+","+Main.tama.getSante()
+							+","+Main.tama.getProprete()+","+Main.tama.getSommeil()+","+Main.tama.getAppetit()+","+Main.tama.getBonheur()+")";
+					stmt.executeUpdate(sql);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			System.out.println(Main.tama);
+			timer.cancel();
+			default_sprite.cancel();
+			Main.window.close();
+		}else if (res.get() == non) {
+			timer.cancel();
+			default_sprite.cancel();
+			Main.window.close();
+		}
 	}
 }

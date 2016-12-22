@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.60">
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ChargerPartieController">
    <children>
       <AnchorPane prefHeight="600.0" prefWidth="500.0">
          <children>
@@ -14,6 +16,14 @@
                   <Font name="Early GameBoy Regular" size="30.0" />
                </font>
             </Label>
+            <Button fx:id="charger" layoutX="205.0" layoutY="528.0" mnemonicParsing="false" text="Charger" />
+            <TableView fx:id="tablePartie" layoutX="48.0" layoutY="171.0" prefHeight="297.0" prefWidth="405.0">
+              <columns>
+                <TableColumn fx:id="nomPartie" prefWidth="129.0" text="NOM" />
+                <TableColumn fx:id="racePartie" prefWidth="136.0" text="RACE" />
+                  <TableColumn fx:id="agePartie" prefWidth="139.0" text="AGE" />
+              </columns>
+            </TableView>
          </children>
       </AnchorPane>
    </children>

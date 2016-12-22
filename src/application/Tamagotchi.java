@@ -6,6 +6,8 @@ import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
@@ -15,16 +17,20 @@ public class Tamagotchi extends TimerTask{
 	private IntegerProperty sommeil;
 	private IntegerProperty appetit;
 	private IntegerProperty sante;
-	private String nom;
-	private String race;
+	private StringProperty nom;
+	private StringProperty race;
 	private IntegerProperty age;
+	public static final String CHIEN = "chien", CHAT = "chat", OISEAU = "oiseau";
 
-	public Tamagotchi(){
-		this.sante = new SimpleIntegerProperty(100);
-		this.proprete = new SimpleIntegerProperty(100);
-		this.bonheur = new SimpleIntegerProperty(100);
-		this.sommeil = new SimpleIntegerProperty(100);
-		this.appetit = new SimpleIntegerProperty(100);
+	public Tamagotchi(String nom, String race, int age, int sante, int proprete, int bonheur, int sommeil, int appetit){
+		this.nom = new SimpleStringProperty(nom);
+		this.race = new SimpleStringProperty(race);
+		this.age = new SimpleIntegerProperty(age);
+		this.sante = new SimpleIntegerProperty(sante);
+		this.proprete = new SimpleIntegerProperty(proprete);
+		this.bonheur = new SimpleIntegerProperty(bonheur);
+		this.sommeil = new SimpleIntegerProperty(sommeil);
+		this.appetit = new SimpleIntegerProperty(appetit);
 	}
 
 	@Override
@@ -40,9 +46,9 @@ public class Tamagotchi extends TimerTask{
 		this.setAge(this.getAge() + 1);
 	}
 
-	public Tamagotchi(Caracteristique caracteristique){
-		this.nom = caracteristique.getNom();
-		this.race = caracteristique.getRace();
+	public Tamagotchi(String nom, String race){
+		this.nom = new SimpleStringProperty(nom);
+		this.race = new SimpleStringProperty(race);
 		this.age = new SimpleIntegerProperty(0);
 		this.sante = new SimpleIntegerProperty(100);
 		this.proprete = new SimpleIntegerProperty(100);
@@ -72,6 +78,14 @@ public class Tamagotchi extends TimerTask{
 	
 	public IntegerProperty ageProperty(){
 		return age;
+	}
+	
+	public StringProperty nomProperty(){
+		return nom;
+	}
+	
+	public StringProperty raceProperty(){
+		return race;
 	}
 	
 	public int getSante() {
@@ -115,19 +129,17 @@ public class Tamagotchi extends TimerTask{
 	}
 
 	public String getNom() {
-		return nom;
+		return nom.get();
 	}
-
 	public void setNom(String nom) {
-		this.nom = nom;
+		this.nom.set(nom);
 	}
-
 	public String getRace() {
-		return race;
+		return race.get();
 	}
-
+	
 	public void setRace(String race) {
-		this.race = race;
+		this.race.set(race);
 	}
 
 	public int getAge() {
@@ -189,4 +201,7 @@ public class Tamagotchi extends TimerTask{
 			this.setSante(this.getSante() - 2);
 	}
 	
+	public String toString(){
+	      return "Tama [ nom: "+ this.getNom() + ", age: " + this.getAge() + ", race: " + this.getRace() + " ]";
+	   }
 }
