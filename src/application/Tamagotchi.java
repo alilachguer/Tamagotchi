@@ -57,6 +57,10 @@ public class Tamagotchi extends TimerTask{
 		this.appetit = new SimpleIntegerProperty(100);
 	}
 	
+	public Tamagotchi(String nom){
+		this.nom = new SimpleStringProperty(nom);
+	}
+	
 	public IntegerProperty santeProperty(){
 		return sante;
 	}
@@ -152,7 +156,7 @@ public class Tamagotchi extends TimerTask{
 
 	public void nourir(){
 		if (this.getAppetit() < 100) {
-			this.setAppetit(this.getAppetit() + 10); 
+			this.setAppetit(this.getAppetit() + 20); 
 		}
 		if (this.getAppetit() >= 130) {
 			this.setSante(this.getSante() - 1);
@@ -161,7 +165,7 @@ public class Tamagotchi extends TimerTask{
 	
 	public void soigner(){
 		if (this.getSante() < 100) {
-			this.setSante(this.getSante() + 10);
+			this.setSante(this.getSante() + 20);
 		}
 		if (this.getSante() >= 100) {
 			this.setSante(100);
@@ -169,12 +173,12 @@ public class Tamagotchi extends TimerTask{
 	}
 	
 	public void divertir(){
-		this.setBonheur(this.getBonheur() + 10);
+		this.setBonheur(this.getBonheur() + 20);
 	}
 	
 	public void dormir(){
 		if (this.getSommeil() < 100) {
-			this.setSommeil(this.getSommeil() + 10);
+			this.setSommeil(this.getSommeil() + 20);
 		}
 		if (this.getSommeil() >= 150) {
 			this.setSante(this.getSante() - 2);
@@ -183,7 +187,7 @@ public class Tamagotchi extends TimerTask{
 	
 	public void laver(){
 		if (this.getProprete() < 100) {
-			this.setProprete(this.getProprete() + 10);
+			this.setProprete(this.getProprete() + 20);
 		}
 		if (this.getProprete() > 100) {
 			this.setSante(this.getSante() - 1);
@@ -202,6 +206,6 @@ public class Tamagotchi extends TimerTask{
 	}
 	
 	public String toString(){
-	      return "Tama [ nom: "+ this.getNom() + ", age: " + this.getAge() + ", race: " + this.getRace() + " ]";
+	      return "Tama [ nom: "+ this.getNom() + ", age: " + this.getAge() + ", race: " + this.getRace() + ", sante: "+this.getSante()+" ]";
 	   }
 }
