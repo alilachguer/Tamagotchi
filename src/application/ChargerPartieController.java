@@ -32,7 +32,6 @@ public class ChargerPartieController {
 	@FXML private TableColumn<Tamagotchi, String> agePartie;
 	private Connection connection = null;
 	public static final ObservableList data = FXCollections.observableArrayList();
-	private int index = 0;
 	
 	
 	@FXML private void initialize(){

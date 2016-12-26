@@ -18,7 +18,6 @@ import javafx.stage.Stage;
 public class Main extends Application {
 	public static Stage window;
 	public static Tamagotchi tama;
-	public static String json;
 	@Override
 	public void start(Stage primaryStage) throws IOException {
 		window = primaryStage;
