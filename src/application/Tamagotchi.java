@@ -173,6 +173,9 @@ public class Tamagotchi extends TimerTask{
 	}
 	
 	public void divertir(){
+		if(this.getBonheur() >= 100){
+			this.setSommeil(this.getSommeil() - 20);
+		}
 		this.setBonheur(this.getBonheur() + 20);
 	}
 	

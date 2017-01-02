@@ -5,6 +5,9 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -13,9 +16,10 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
-
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -103,7 +107,9 @@ public class JeuController extends TimerTask{
 						animation.stop();
 						animer(sprite, 2, 2, 470, 205, Animation.INDEFINITE);
 					}
-					
+					if(Main.tama.getSante() <= 0){
+						gameOver(Main.tama);
+					}
 				}else if (Main.tama.getAge() < 10) {
 					if (Main.tama.getSante() <= 50) {
 						animation.stop();
@@ -113,6 +119,9 @@ public class JeuController extends TimerTask{
 						animation.stop();
 						animer(sprite_bebe, 2, 2, 470, 205, Animation.INDEFINITE);
 					}
+					if(Main.tama.getSante() <= 0){
+						gameOver(Main.tama);
+					}
 				}
 			}
 		});
@@ -121,7 +130,7 @@ public class JeuController extends TimerTask{
 			@Override
 			public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
 				if (Main.tama.getAge() > 10) {
-					if (Main.tama.getAppetit() <= 70) {
+					if (Main.tama.getAppetit() <= 60) {
 						animation.stop();
 						animer(sprite, 2, 2, 280, 90, Animation.INDEFINITE);
 					}
@@ -130,7 +139,7 @@ public class JeuController extends TimerTask{
 						animer(sprite, 2, 2, 280, 162, Animation.INDEFINITE);
 					}
 				}else if (Main.tama.getAge() < 10) {
-					if (Main.tama.getAppetit() <= 70) {
+					if (Main.tama.getAppetit() <= 60) {
 						animation.stop();
 						animer(sprite_bebe, 2, 2, 280, 90, Animation.INDEFINITE);
 					}
@@ -346,5 +355,32 @@ public class JeuController extends TimerTask{
 			default_sprite.cancel();
 			Main.window.close();
 		}
+	}
+	
+	public void gameOver(Tamagotchi tama){
+		Parent root;
+		try {
+			root = FXMLLoader.load(getClass().getResource("main.fxml"));
+			Scene scene = new Scene(root);
+			Stage primaryStage = Main.window;
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		connection = database.dbconnect();
+		try {
+			Statement stmt = connection.createStatement();
+			String sql= "delete from tamagotchi where nom ='"+tama.getNom()+"' and race = '"+tama.getRace()+"' ;";
+			stmt.executeUpdate(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println("game over");
 	}
 }
